@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/miskat01/.claude/projects/c--Users-miskat01-Downloads-site-cittacolori/memory/**)",
+      "Bash(grep -v \".jpg$\")"
+    ]
+  }
+}

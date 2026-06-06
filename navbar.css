@@ -1,0 +1,652 @@
+/* ============================================================
+   Site Navbar — Component
+   navbar.css  |  Città @ Colori Cooperativa Sociale
+   ============================================================ */
+
+/* ── Base ── */
+.siteNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  transition: background 0.32s ease, box-shadow 0.32s ease;
+}
+
+/* Transparent state (hero pages before scroll) */
+.siteNav:not(.is-scrolled):not(.is-solid) {
+  background: linear-gradient(180deg, rgba(3,27,70,0.72) 0%, transparent 100%);
+}
+
+/* Scrolled / solid (non-hero pages) */
+.siteNav.is-scrolled,
+.siteNav.is-solid {
+  background: rgba(3, 27, 70, 0.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 2px 28px rgba(0, 0, 0, 0.22);
+}
+
+/* ── Inner layout ── */
+.siteNav-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 72px;
+  width: min(1240px, calc(100% - 36px));
+  margin: 0 auto;
+}
+
+/* ── Brand ── */
+.siteNav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  color: #fff;
+  text-decoration: none;
+}
+
+.siteNav-brand img {
+  height: 38px;
+  width: 38px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.siteNav-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.siteNav-brand-text strong {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.siteNav-brand-text span {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+/* ── Nav links (desktop) ── */
+.siteNav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+  gap: 2px;
+}
+
+.siteNav-links li {
+  display: flex;
+}
+
+.siteNav-links a {
+  display: block;
+  padding: 9px 13px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.81rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  white-space: nowrap;
+  position: relative;
+  text-decoration: none;
+  transition: color 0.18s ease, background 0.18s ease;
+}
+
+.siteNav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 13px;
+  right: 13px;
+  height: 2px;
+  background: #fff;
+  border-radius: 999px;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.siteNav-links a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.siteNav-links a.active {
+  color: #fff;
+}
+
+.siteNav-links a.active::after {
+  transform: scaleX(1);
+}
+
+/* ── Actions (phone + CTA) ── */
+.siteNav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.siteNav-phone {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.82rem;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.siteNav-phone:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #fff;
+}
+
+.siteNav-cta {
+  background: rgba(22, 112, 255, 0.88);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.siteNav-cta:hover {
+  background: #1670ff;
+  transform: translateY(-1px);
+}
+
+/* ── Hamburger button ── */
+.siteNav-hamburger {
+  position: relative;        /* anchors the ::before/::after X lines */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: auto;
+  transition: background 0.18s ease;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.siteNav-hamburger:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Custom menu icon (menu.png) */
+.siteNav-hamburger-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1); /* force white regardless of source color */
+  transition: opacity 0.22s ease,
+              transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* X lines (cross icon) revealed when overlay is open */
+.siteNav-hamburger::before,
+.siteNav-hamburger::after {
+  content: '';
+  position: absolute;
+  top:  calc(50% - 1px);  /* center vertically (half of 2px line) */
+  left: calc(50% - 9px);  /* center horizontally (half of 18px) */
+  width: 18px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.18s ease,
+              transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Active state: menu icon fades/shrinks out, X lines appear */
+.siteNav-hamburger.is-active .siteNav-hamburger-img {
+  opacity: 0;
+  transform: scale(0.4) rotate(90deg);
+  animation: none !important;
+}
+
+.siteNav-hamburger.is-active::before {
+  opacity: 1;
+  transform: rotate(45deg);
+}
+
+.siteNav-hamburger.is-active::after {
+  opacity: 1;
+  transform: rotate(-45deg);
+}
+
+/* ── Recall animation — idle attention-getter ──
+   Cycle: 6 s total. Active wiggle lasts the first ~8 % (≈ 0.5 s);
+   the remaining 92 % is a silent pause before the next repeat.
+   Fires 2 s after load, then every 6 s forever (stops when open). */
+@keyframes navRecall {
+  0%,  8%, 100% { transform: scale(1)    rotate(0deg); }
+  2%            { transform: scale(1.14) rotate(-6deg); }
+  5%            { transform: scale(1.07) rotate(4deg); }
+  7%            { transform: scale(1.02) rotate(-1deg); }
+}
+
+.siteNav-hamburger:not(.is-active) .siteNav-hamburger-img {
+  animation: navRecall 6s cubic-bezier(0.4, 0, 0.6, 1) 2s infinite;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 980px) {
+  .siteNav-cta { display: none; }
+  .siteNav-links a {
+    padding: 9px 10px;
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+  }
+  .siteNav-links a::after { left: 10px; right: 10px; }
+}
+
+@media (max-width: 780px) {
+  .siteNav-phone { display: none; }
+}
+
+@media (max-width: 700px) {
+  .siteNav-hamburger { display: flex; }
+  .siteNav-actions   { display: none; }
+  .siteNav-links     { display: none; } /* links live in the overlay on mobile */
+
+  .siteNav-inner {
+    height: 60px;
+    width: calc(100% - 22px);
+  }
+}
+
+@media (max-width: 360px) {
+  .siteNav-brand-text { display: none; }
+}
+
+
+/* ============================================================
+   Full-screen slide-in Overlay Menu (mobile only)
+   ============================================================ */
+
+.navOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  pointer-events: none;
+  /* Only relevant on mobile — hidden on desktop via media query below */
+}
+
+.navOverlay.is-open {
+  pointer-events: all;
+}
+
+/* ── Backdrop ── */
+.navOverlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(1, 8, 28, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.navOverlay.is-open .navOverlay-backdrop {
+  opacity: 1;
+}
+
+/* ── Panel ── */
+.navOverlay-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(400px, 100vw);
+  background: linear-gradient(160deg, #07255c 0%, #031b46 45%, #020f2e 100%);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-shadow: -16px 0 48px rgba(0, 0, 0, 0.4);
+}
+
+.navOverlay.is-open .navOverlay-panel {
+  transform: translateX(0);
+}
+
+/* ── Panel Header ── */
+.navOverlay-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  min-height: 60px; /* match mobile navbar height */
+}
+
+.navOverlay-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.navOverlay-brand img {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+}
+
+.navOverlay-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.navOverlay-brand-text strong {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.navOverlay-brand-text span {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ── Close button ── */
+.navOverlay-close {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  padding: 0;
+  font: inherit;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.navOverlay-close:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: rotate(90deg);
+}
+
+.navOverlay-close svg {
+  width: 16px;
+  height: 16px;
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  fill: none;
+  display: block;
+}
+
+/* ── Nav items ── */
+.navOverlay-nav {
+  flex: 1;
+  padding: 24px 0 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.navOverlay-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 22px 15px 24px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.68);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  /* Entrance animation defaults */
+  opacity: 0;
+  transform: translateX(28px);
+  transition:
+    opacity    0.38s ease,
+    transform  0.38s ease,
+    background 0.2s  ease,
+    color      0.2s  ease;
+}
+
+/* Staggered entrance when overlay opens */
+.navOverlay.is-open .navOverlay-item:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.14s; }
+.navOverlay.is-open .navOverlay-item:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.20s; }
+.navOverlay.is-open .navOverlay-item:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.26s; }
+.navOverlay.is-open .navOverlay-item:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 0.32s; }
+.navOverlay.is-open .navOverlay-item:nth-child(5) { opacity: 1; transform: translateX(0); transition-delay: 0.38s; }
+
+/* Active left border */
+.navOverlay-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  width: 3px;
+  background: #1670ff;
+  border-radius: 0 3px 3px 0;
+}
+
+.navOverlay-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.navOverlay-item.active {
+  color: #fff;
+}
+
+/* ── Item body (icon + number + label) ── */
+.navOverlay-item-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navOverlay-item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.navOverlay-item:hover .navOverlay-item-icon {
+  background: rgba(22, 112, 255, 0.18);
+  border-color: rgba(22, 112, 255, 0.35);
+}
+
+.navOverlay-item.active .navOverlay-item-icon {
+  background: rgba(22, 112, 255, 0.22);
+  border-color: rgba(22, 112, 255, 0.4);
+}
+
+.navOverlay-item-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: rgba(255, 255, 255, 0.7);
+  display: block;
+  flex-shrink: 0;
+  transition: fill 0.2s ease;
+}
+
+.navOverlay-item:hover .navOverlay-item-icon svg,
+.navOverlay-item.active .navOverlay-item-icon svg {
+  fill: rgba(100, 170, 255, 1);
+}
+
+.navOverlay-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navOverlay-num {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: rgba(22, 112, 255, 0.75);
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.navOverlay-label {
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: inherit;
+}
+
+/* ── Arrow (right-arrow.png image) ── */
+.navOverlay-arrow {
+  width: 10px;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1); /* force white */
+  opacity: 0.22;
+  display: block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.navOverlay-item:hover .navOverlay-arrow {
+  opacity: 0.65;
+  transform: translateX(3px);
+}
+
+.navOverlay-item.active .navOverlay-arrow {
+  opacity: 0.45;
+  transform: translateX(2px);
+}
+
+/* ── Panel Footer ── */
+.navOverlay-foot {
+  padding: 22px 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.navOverlay-foot-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 0 4px;
+}
+
+.navOverlay-foot a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.58);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.18s ease;
+}
+
+.navOverlay-foot a:hover {
+  color: #fff;
+}
+
+.navOverlay-foot-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.navOverlay-foot-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: rgba(255, 255, 255, 0.6);
+  display: block;
+}
+
+/* CTA button in overlay */
+.navOverlay-cta {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  background: rgba(22, 112, 255, 0.9);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 12px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 0.2s ease, transform 0.2s ease;
+  /* entrance stagger */
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.38s ease, transform 0.38s ease, background 0.2s ease;
+}
+
+.navOverlay.is-open .navOverlay-cta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.44s;
+}
+
+.navOverlay-cta:hover {
+  background: #1670ff;
+  transform: translateY(-1px);
+}
+
+/* ── Only show overlay on mobile ── */
+@media (min-width: 701px) {
+  .navOverlay { display: none !important; }
+}

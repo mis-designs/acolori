@@ -1,0 +1,370 @@
+﻿<!doctype html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contatti e Preventivo Mediazione Interculturale | Città @ Colori — Ivrea (TO)</title>
+    <meta name="description" content="Richiedi un preventivo per mediazione interculturale a Città @ Colori. Contattaci via WhatsApp al +39 388 900 9306 o via email. Sede a Ivrea, Torino e Piemonte." />
+    <link rel="canonical" href="https://cittaacolori.com/contatti.html" />
+    <link rel="icon" type="image/jpeg" href="assets/img/logo.jpg" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cittaacolori.com/contatti.html" />
+    <meta property="og:title" content="Contatti e Preventivo | Città @ Colori Cooperativa Sociale" />
+    <meta property="og:description" content="Richiedi un preventivo per mediazione interculturale. Contattaci via WhatsApp, email o form. Risposta rapida." />
+    <meta property="og:image" content="https://cittaacolori.com/assets/img/hero.jpg" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Città @ Colori Cooperativa Sociale" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Schema.org: ContactPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contatti Città @ Colori",
+      "description": "Pagina contatti e richiesta preventivo per mediazione interculturale",
+      "url": "https://cittaacolori.com/contatti.html",
+      "mainEntity": {
+        "@type": "LocalBusiness",
+        "name": "Città @ Colori Cooperativa Sociale",
+        "telephone": ["+393889009306", "+393278582999"],
+        "email": "cittaacolori@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Via Cavour, 12",
+          "postalCode": "10010",
+          "addressLocality": "Settimo Vittone",
+          "addressRegion": "TO",
+          "addressCountry": "IT"
+        }
+      }
+    }
+    </script>
+</head>
+
+<body>
+
+  <div id="scrollProgress" aria-hidden="true"></div>
+
+    <header class="heroTop heroTop-small">
+        <div class="heroTop-overlay"></div>
+
+        <div class="site-shell">
+            <div class="heroCenter heroCenter-small">
+                <p class="eyebrow">CONTATTI</p>
+                <h1>Richiedi un preventivo</h1>
+                <p class="heroSub">Compila il modulo in pochi passi oppure aprici su WhatsApp con il messaggio già pronto.</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-shell">
+        <section class="contactLayout">
+            <div class="contactCard">
+                <div class="contactHead">
+                    <h2>Richiedi un preventivo</h2>
+                    <p>Compila il form e scegli la modalità. Invia la richiesta dal modulo oppure aprici su WhatsApp.</p>
+                </div>
+
+                <!-- Messaggi Formspree -->
+                <div data-fs-success class="fsMsgSuccess">
+                    ✓ Richiesta inviata! Ti risponderemo al più presto <strong id="confirmEmail"></strong>.
+                </div>
+                <div data-fs-error class="fsMsgError"></div>
+
+                <!-- FORM -->
+                <form id="form-preventivo" class="waForm">
+                    <!-- Formspree config -->
+                    <input type="hidden" name="_subject" value="Nuova richiesta preventivo — Città @ Colori">
+
+                    <div class="waRow">
+                        <label>
+                            <span>Ente / Referente *</span>
+                            <input id="rf_name" name="ente_referente" type="text"
+                                placeholder="Es. Comune / Consorzio / Nome"
+                                autocomplete="organization" data-fs-field required />
+                            <span data-fs-error="ente_referente" class="fsFieldErr"></span>
+                        </label>
+                        <label>
+                            <span>Email *</span>
+                            <input id="rf_email" name="email" type="email"
+                                placeholder="nome@ente.it" autocomplete="email"
+                                data-fs-field required />
+                            <span data-fs-error="email" class="fsFieldErr"></span>
+                        </label>
+                    </div>
+
+                    <div class="waRow">
+                        <label>
+                            <span>Lingua/e</span>
+                            <input id="rf_lang" name="lingue" type="text"
+                                placeholder="Arabo, Francese, Inglese..." />
+                        </label>
+                        <div class="modeField">
+                            <span>Modalità *</span>
+                            <div class="modePicker" role="radiogroup" aria-label="Seleziona modalità">
+                                <input class="modeRadio" id="rf_mode_presence" name="modalita" type="radio" value="In presenza" data-fs-field required />
+                                <label class="modeCard" for="rf_mode_presence">
+                                    <strong>In presenza</strong>
+                                    <small>Intervento presso sede, comune o sportello.</small>
+                                </label>
+
+                                <input class="modeRadio" id="rf_mode_online" name="modalita" type="radio" value="Online" data-fs-field required />
+                                <label class="modeCard" for="rf_mode_online">
+                                    <strong>Online</strong>
+                                    <small>Videochiamata rapida, senza spostamenti.</small>
+                                </label>
+                            </div>
+                            <span data-fs-error="modalita" class="fsFieldErr"></span>
+                        </div>
+                    </div>
+
+                    <!-- DATA + ORA -->
+                    <div class="waRow" id="bookingFieldWrap" hidden>
+                        <label class="dateTimeField">
+                            <span>Data e fascia oraria *</span>
+                            <div id="rf_datetime_custom" class="dateTimePickerHost" hidden></div>
+                            <input id="rf_datetime" class="nativeDateFallback" name="data_ora" type="datetime-local" />
+                            <input id="rf_datetime_end" name="data_ora_fine" type="hidden" />
+                        </label>
+                        <small class="fieldHint">Se il selettore personalizzato non è disponibile, viene usato automaticamente quello di sistema.</small>
+                    </div>
+
+                    <!-- LUOGO (solo In presenza) -->
+                    <div class="waRow" id="placeFieldWrap" hidden>
+                        <label>
+                            <span>Luogo / Comune</span>
+                            <input id="rf_place" name="luogo" type="text"
+                                placeholder="Es. Ivrea, Settimo Vittone, sede ente..." />
+                        </label>
+                    </div>
+
+                    <label>
+                        <span>Messaggio *</span>
+                        <textarea id="rf_msg" name="messaggio" rows="5"
+                            placeholder="Dettagli della richiesta, fascia oraria, urgenza, note..."
+                            data-fs-field required></textarea>
+                        <span data-fs-error="messaggio" class="fsFieldErr"></span>
+                    </label>
+
+                    <div class="waActions">
+                        <div class="waActionButtons">
+                            <button class="btnBlue" type="button" onclick="sendWhatsApp()">
+                                Invia via WhatsApp
+                            </button>
+                            <button class="btnBlue EmailForm" type="submit" data-fs-submit-btn>
+                                Invia richiesta
+                            </button>
+                        </div>
+                        <small>
+                            WhatsApp apre la chat con il messaggio già pronto.
+                            Il modulo invia la richiesta direttamente a Città @ Colori.
+                        </small>
+                    </div>
+                </form>
+            </div>
+
+            <aside class="contactSide">
+
+                <!-- Contatti diretti -->
+                <div class="sideBox">
+                    <h3>Contatti diretti</h3>
+                    <div class="sideLine">
+                        <div class="sideLine-icon"><img src="phone-call.png" alt=""></div>
+                        <a href="tel:+393889009306" class="sideLine-val">+39 388 900 9306</a>
+                    </div>
+                    <div class="sideLine">
+                        <div class="sideLine-icon"><img src="phone-call.png" alt=""></div>
+                        <a href="tel:+393278582999" class="sideLine-val">+39 327 858 2999</a>
+                    </div>
+                    <div class="sideLine">
+                        <div class="sideLine-icon"><img src="mail.png" alt=""></div>
+                        <a href="mailto:cittaacolori@gmail.com" class="sideLine-val-blue">cittaacolori@gmail.com</a>
+                    </div>
+                    <div class="sideLine">
+                        <div class="sideLine-icon"><img src="location.svg" alt=""></div>
+                        <strong style="font-size:.92rem;color:#0f1b36">Corso Botta 25, Ivrea (TO)</strong>
+                    </div>
+                </div>
+
+                <!-- Dati societari -->
+                <div class="sideBox">
+                    <h3>Dati societari</h3>
+                    <div class="sideLine"><span>C.F./P.IVA</span><strong>12416160013</strong></div>
+                    <div class="sideLine"><span>Forma giuridica</span><strong>Cooperativa Sociale</strong></div>
+                    <div class="sideLine"><span>Fondata</span><strong>Febbraio 2021</strong></div>
+                </div>
+
+                <!-- Mappa card premium -->
+                <div class="mapCardFull">
+                    <!-- Label top-left always visible -->
+                    <div class="mapCardLabel">
+                        <img src="location.svg" alt="" class="loc-icon">
+                        <div class="mapCardLabel-text">
+                            <strong>Città @ Colori</strong>
+                            <span>Corso Botta 25, Ivrea</span>
+                        </div>
+                    </div>
+                    <!-- Leaflet map -->
+                    <div id="leaflet-map"></div>
+                    <!-- Google Maps button always visible bottom-right -->
+                    <a class="mapCardBtn" target="_blank" rel="noopener"
+                        href="https://www.google.com/maps/search/?api=1&query=Corso+Botta+25,+Ivrea+TO">
+                        Apri in Google Maps
+                        <img src="right-arrow.png" alt="" class="arrow-icon">
+                    </a>
+                    <!-- Info strip: slides up on hover -->
+                    <div class="mapCardInfoStrip">
+                        <div class="mapInfoItem">
+                            <img src="phone-call.png" alt="">
+                            <a href="tel:+393889009306">+39 388 900 9306</a>
+                        </div>
+                        <div class="mapInfoDivider"></div>
+                        <div class="mapInfoItem">
+                            <img src="mail.png" alt="">
+                            <a href="mailto:cittaacolori@gmail.com">cittaacolori@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+        </section>
+    </main>
+
+  <!-- Form confirmation overlay -->
+  <div class="confirmOverlay" id="confirmOverlay" role="dialog" aria-modal="true" aria-label="Conferma invio">
+    <div class="confirmBox">
+      <img src="conferm.gif" alt="Conferma" class="confirmBox-img">
+      <h3>Richiesta inviata!</h3>
+      <p>Ti risponderemo al più presto all'indirizzo email indicato. Grazie per averci contattato.</p>
+      <button class="confirmBox-close" id="confirmClose" type="button">Chiudi</button>
+    </div>
+  </div>
+
+  <!-- WhatsApp float -->
+  <div class="waFloat">
+    <div class="waFloat-ring" aria-hidden="true"></div>
+    <a class="waFloat-btn" target="_blank" rel="noopener"
+      href="https://wa.me/393889009306?text=Ciao%20Citt%C3%A0%20%40%20Colori%2C%20vorrei%20un%20preventivo."
+      aria-label="Contattaci su WhatsApp">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span>Scrivi su WhatsApp</span>
+    </a>
+  </div>
+
+  <footer class="siteFooter">
+    <div class="site-shell">
+      <div class="footerTop">
+        <div class="ftCol-brand">
+          <a class="ftLogo" href="index.html">
+            <img src="assets/img/logo.jpg" alt="Logo Città @ Colori Cooperativa Sociale">
+            <div class="ftLogo-text"><strong>Città @ Colori</strong><span>Cooperativa Sociale</span></div>
+          </a>
+          <p class="ftDesc">Mediazione interculturale professionale per enti, comuni e operatori sociali in Piemonte. In presenza, online e con supporti multilingue.</p>
+          <a class="ftEmailLink" href="mailto:cittaacolori@gmail.com">✉ cittaacolori@gmail.com</a>
+          <a href="https://www.facebook.com/share/1NcapkEyW7/" target="_blank" rel="noopener noreferrer" class="ftCredit">
+            <img src="assets/img/mdesignstextlogo.png" alt="MiskatDesigns" class="ftCreditLogo">
+            <span class="ftCreditTag">Web Designer</span>
+          </a>
+        </div>
+        <div>
+          <p class="ftTitle">Servizi</p>
+          <nav class="ftNav">
+            <a href="servizi.html#presenza">Mediazione in presenza</a>
+            <a href="servizi.html#online">Mediazione online</a>
+            <a href="servizi.html#media">Audio & Video multilingue</a>
+            <a href="servizi.html#equipe">Supporto legale in équipe</a>
+          </nav>
+        </div>
+        <div>
+          <p class="ftTitle">Pagine</p>
+          <nav class="ftNav">
+            <a href="index.html">Home</a>
+            <a href="servizi.html">Servizi</a>
+            <a href="lavora-con-noi.html">Lavora con noi</a>
+            <a href="chi-siamo.html">Chi siamo</a>
+            <a href="contatti.html">Contatti</a>
+          </nav>
+        </div>
+        <div>
+          <p class="ftTitle">Dove siamo</p>
+          <address class="ftAddress">
+            <div class="ftAddressLine"><span class="ftAddressLine-icon"><img src="location.svg" alt="" width="16" style="filter:invert(1);opacity:.7"></span><span>Corso Botta 25<br>Ivrea (TO), Piemonte</span></div>
+            <div class="ftAddressLine"><span class="ftAddressLine-icon"><img src="phone-call.png" alt="" width="15" style="filter:invert(1);opacity:.7"></span><div><a href="tel:+393889009306">+39 388 900 9306</a><a href="tel:+393278582999">+39 327 858 2999</a></div></div>
+            <div class="ftAddressLine"><span class="ftAddressLine-icon"><img src="mail.png" alt="" width="16" style="filter:invert(1);opacity:.7"></span><a href="mailto:cittaacolori@gmail.com">cittaacolori@gmail.com</a></div>
+          </address>
+        </div>
+      </div>
+      <div class="footerDivider"></div>
+      <div class="footerBottom2">
+        <span>© <span id="year3"></span> Città @ Colori — C.F./P.IVA 12416160013</span>
+        <div class="ftBottomLinks"><a href="privacy.html">Privacy Policy</a><a href="cookie.html">Cookie Policy</a></div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="navbar.js"></script>
+  <script src="app.js" defer></script>
+
+  <!-- Formspree AJAX -->
+  <script>
+    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#form-preventivo', formId: 'xjgppwrq' });
+  </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+  <!-- Leaflet map -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    (function () {
+      var mapEl = document.getElementById('leaflet-map');
+      if (!mapEl) return;
+
+      var map = L.map('leaflet-map', {
+        center: [45.4668, 7.8741],
+        zoom: 16,
+        zoomControl: true,
+        scrollWheelZoom: false,
+        attributionControl: true
+      });
+
+      /* Tile layer CartoDB Positron — mappa minimalista e pulita */
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+      }).addTo(map);
+
+      /* Marker personalizzato con i colori del brand */
+      var pinIcon = L.divIcon({
+        html: '<div style="width:36px;height:36px;background:#1670ff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 4px 14px rgba(22,112,255,.40);border:3px solid #fff"></div>',
+        className: '',
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        popupAnchor: [0, -40]
+      });
+
+      L.marker([45.4668, 7.8741], { icon: pinIcon })
+        .addTo(map)
+        .bindPopup(
+          '<div style="font-family:\'Plus Jakarta Sans\',sans-serif;padding:4px 2px">' +
+          '<strong style="color:#0f1b36;font-size:.92rem">Città @ Colori</strong><br>' +
+          '<span style="color:#5a6a80;font-size:.84rem">Corso Botta 25, Ivrea (TO)</span>' +
+          '</div>',
+          { maxWidth: 200 }
+        )
+        .openPopup();
+    })();
+  </script>
+</body>
+
+</html>
+
+
