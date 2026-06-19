@@ -79,13 +79,21 @@
     </div>
   </header>
 
-  <main class="site-shell">
-    <section class="joinLayout">
-      <div class="joinCard">
-        <div class="contactHead">
-          <h2>Invia la tua candidatura</h2>
-          <p>Compila il form con i tuoi dati e invia la candidatura direttamente. Ti risponderemo via email.</p>
+  <main class="joinPageMain">
+    <section class="joinGlassSection">
+      <div class="site-shell">
+        <div class="joinSectionHead">
+          <p class="sectionEyebrow">Lavora con noi</p>
+          <h2>Entra nella rete di Citt&agrave; @ Colori</h2>
+          <p>Collabora con noi nei servizi di mediazione, interpretariato e inclusione sociale.</p>
         </div>
+
+        <div class="joinLayout">
+          <div class="joinCard">
+            <div class="contactHead">
+              <h2>Invia la tua candidatura</h2>
+              <p>Compila il modulo con i tuoi dati. Ti ricontatteremo via email per i prossimi passaggi.</p>
+            </div>
 
         <!-- Messaggi Formspree -->
         <div data-fs-success class="fsMsgSuccess">
@@ -156,23 +164,31 @@
           </label>
 
           <div class="joinNoteBox">
-            <strong>📎 Allega il CV</strong>
-            <p>Dopo l'invio riceverai una email di conferma: puoi rispondere allegando il tuo CV direttamente in quella email.</p>
+            <strong>CV da inviare successivamente</strong>
+            <p>Dopo l'invio riceverai un'email di conferma. Potrai rispondere allegando il tuo CV.</p>
           </div>
 
-          <div class="waActions">
+          <label class="joinPrivacyCheck">
+            <input id="jc_privacy" name="privacy" type="checkbox" required data-fs-field />
+            <span>Ho letto e accetto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a> per il trattamento dei dati personali.</span>
+            <span data-fs-error="privacy" class="fsFieldErr"></span>
+          </label>
+
+          <div class="joinFormFooter">
             <button class="btnJobSubmit" type="submit" data-fs-submit-btn>
-              <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M5 12L3 4l18 8-18 8 2-8Zm0 0h8" />
+              </svg>
               Invia la candidatura
             </button>
             <small>
-              I campi con * sono obbligatori. Risponderemo entro 2–3 giorni lavorativi.
+              I campi con * sono obbligatori. Risponderemo entro 2-3 giorni lavorativi.
             </small>
           </div>
         </form>
-      </div>
+          </div>
 
-      <aside class="joinSideInfo">
+          <aside class="joinSideInfo">
 
         <!-- Profili ricercati -->
         <div class="sideBox">
@@ -200,22 +216,36 @@
         <!-- Contatti -->
         <div class="sideBox">
           <h3>Per informazioni</h3>
-          <div class="sideLine">
+          <div class="sideLine joinContactLine">
             <div class="sideLine-icon"><img src="mail.png" alt=""></div>
-            <a href="mailto:cittaacolori@gmail.com" class="sideLine-val-blue">cittaacolori@gmail.com</a>
+            <div>
+              <span>Email</span>
+              <a href="mailto:cittaacolori@gmail.com" class="sideLine-val-blue">cittaacolori@gmail.com</a>
+            </div>
           </div>
-          <div class="sideLine">
+          <div class="sideLine joinContactLine">
             <div class="sideLine-icon"><img src="phone-call.png" alt=""></div>
-            <a href="tel:+393889009306" class="sideLine-val">+39 388 900 9306</a>
+            <div>
+              <span>Telefono</span>
+              <a href="tel:+393889009306" class="sideLine-val">+39 388 900 9306</a>
+            </div>
           </div>
         </div>
 
-        <!-- Immagine -->
-        <div style="border-radius:20px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06),0 16px 40px rgba(8,25,56,.10)">
-          <img style="width:100%;height:240px;object-fit:cover;display:block" src="assets/img/cand.jpg" alt="Mediatori interculturali del team Città @ Colori" loading="lazy">
+        <!-- Supporto candidatura -->
+        <div class="sideBox joinHelpBox">
+          <h3>Prima di inviare, ricordati di:</h3>
+          <ul>
+            <li>indicare le lingue che parli meglio;</li>
+            <li>scrivere la zona in cui sei disponibile;</li>
+            <li>raccontare eventuali esperienze sociali, educative o di mediazione;</li>
+            <li>controllare che email e telefono siano corretti.</li>
+          </ul>
         </div>
 
-      </aside>
+          </aside>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -304,4 +334,3 @@
 </body>
 
 </html>
-

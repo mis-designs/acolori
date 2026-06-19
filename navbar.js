@@ -72,7 +72,14 @@
     '      <li><a href="index.html"'            + ac('index.html')            + '>Home</a></li>',
     '      <li><a href="servizi.html"'          + ac('servizi.html')          + '>Servizi</a></li>',
     '      <li><a href="lavora-con-noi.html"'   + ac('lavora-con-noi.html')   + '>Lavora con noi</a></li>',
-    '      <li><a href="chi-siamo.html"'         + ac('chi-siamo.html')         + '>Chi siamo</a></li>',
+    '      <li class="siteNav-item siteNav-hasDropdown">',
+    '        <a href="chi-siamo.html"'           + ac('chi-siamo.html')         + ' aria-haspopup="true" aria-expanded="false">Chi siamo</a>',
+    '        <div class="siteNav-dropdown" aria-label="Sottomenu Chi siamo">',
+    '          <a href="chi-siamo.html#storia"><span>01</span>La nostra storia</a>',
+    '          <a href="chi-siamo.html#valori"><span>02</span>Valori e metodo</a>',
+    '          <a href="chi-siamo.html#curriculum"><span>03</span>Curriculum</a>',
+    '        </div>',
+    '      </li>',
     '      <li><a href="contatti.html"'         + ac('contatti.html')         + '>Contatti</a></li>',
     '    </ul>',
 
@@ -132,6 +139,9 @@
     overlayItem('servizi.html',        icons.servizi,   '02', 'Servizi',      page === 'servizi.html'),
     overlayItem('lavora-con-noi.html', icons.lavora,    '03', 'Lavora con noi', page === 'lavora-con-noi.html'),
     overlayItem('chi-siamo.html',       icons.chisiamo,  '04', 'Chi siamo',    page === 'chi-siamo.html'),
+    '      <a class="navOverlay-subItem" href="chi-siamo.html#storia"><span>01</span>La nostra storia</a>',
+    '      <a class="navOverlay-subItem" href="chi-siamo.html#valori"><span>02</span>Valori e metodo</a>',
+    '      <a class="navOverlay-subItem" href="chi-siamo.html#curriculum"><span>03</span>Curriculum</a>',
     overlayItem('contatti.html',       icons.contatti,  '05', 'Contatti',     page === 'contatti.html'),
     '    </nav>',
 
@@ -241,7 +251,7 @@
     closeBtn.addEventListener('click', closeMenu);
 
     /* Nav link click */
-    overlay.querySelectorAll('.navOverlay-item, .navOverlay-cta').forEach(function (a) {
+    overlay.querySelectorAll('.navOverlay-item, .navOverlay-subItem, .navOverlay-cta').forEach(function (a) {
       a.addEventListener('click', closeMenu);
     });
 

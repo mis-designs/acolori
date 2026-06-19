@@ -66,7 +66,7 @@
   </header>
 
   <main class="chiMain">
-    <section class="chiPortfolioStory" aria-labelledby="story-title">
+    <section class="chiPortfolioStory" id="storia" aria-labelledby="story-title">
       <div class="site-shell">
         <div class="chiPortfolioFrame">
           <div class="chiPortfolioTop" aria-hidden="true">
@@ -111,6 +111,15 @@
                   <li><strong>2021</strong><span>Fonda Città @ Colori Cooperativa Sociale</span></li>
                 </ul>
               </div>
+              <div class="chiPortfolioVideo">
+                <iframe
+                  src="https://www.canva.com/design/DAHNCfWMkv8/10FAr3P_9lcx356GPojgdw/watch?embed"
+                  title="Video Citt&agrave; @ Colori"
+                  loading="lazy"
+                  allowfullscreen="allowfullscreen"
+                  allow="fullscreen">
+                </iframe>
+              </div>
             </div>
           </div>
 
@@ -123,7 +132,7 @@
       </div>
     </section>
 
-    <section class="chiSection chiValuesSection" aria-labelledby="values-title">
+    <section class="chiSection chiValuesSection" id="valori" aria-labelledby="values-title">
       <div class="site-shell">
         <div class="chiSectionHead chiSectionHead-center">
           <p class="chiKicker">Valori</p>
@@ -155,6 +164,31 @@
       </div>
     </section>
 
+    <section class="chiSection chiCvSection" id="curriculum" aria-labelledby="cv-title">
+      <div class="site-shell">
+        <div class="chiCvLayout">
+          <div class="chiCvActions" aria-label="Azioni curriculum">
+            <button class="chiCvCard chiCvCard-view" type="button" data-cv-open aria-haspopup="dialog" aria-label="Vedi il nostro curriculum">
+              <img src="assets/img/viewCV.svg" alt="" loading="lazy" />
+            </button>
+          </div>
+
+          <div class="chiCvStatement">
+            <p class="chiKicker">Curriculum</p>
+            <h2 id="cv-title" class="chiCvWaveTitle" aria-label="Il nostro lavoro, nero su bianco.">
+              <span style="--wave-i:0">Il</span>
+              <span style="--wave-i:1">nostro</span>
+              <span style="--wave-i:2">lavoro,</span>
+              <span style="--wave-i:3">nero</span>
+              <span style="--wave-i:4">su</span>
+              <span style="--wave-i:5">bianco.</span>
+            </h2>
+            <p>Esperienza, metodo e servizi raccolti in un documento chiaro, pronto da leggere e scaricare.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="chiSection chiContactSection" aria-labelledby="contact-title">
       <div class="site-shell">
         <div class="chiContactGrid">
@@ -178,6 +212,26 @@
       </div>
     </section>
   </main>
+
+  <div class="chiCvViewer" id="chiCvViewer" role="dialog" aria-modal="true" aria-labelledby="chiCvViewerTitle" hidden>
+    <div class="chiCvViewerBackdrop" data-cv-close aria-hidden="true"></div>
+    <div class="chiCvViewerPanel" role="document">
+      <h2 class="srOnly" id="chiCvViewerTitle">curriculum CITTA @ COLORI aggiornato</h2>
+      <button class="chiCvViewerClose" type="button" data-cv-close aria-label="Chiudi viewer curriculum">×</button>
+
+      <div class="chiCvViewerFrameWrap">
+        <iframe
+          id="chiCvFrame"
+          class="chiCvViewerFrame"
+          src="about:blank"
+          title="Curriculum Citt&agrave; @ Colori">
+        </iframe>
+        <p class="chiCvViewerFallback">
+          Se l'anteprima non si apre, usa il pulsante di download nella barra.
+        </p>
+      </div>
+    </div>
+  </div>
 
   <div class="waFloat">
     <div class="waFloat-ring" aria-hidden="true"></div>
@@ -241,6 +295,61 @@
   <script src="app.js" defer></script>
   <script>
     document.getElementById('yearChi').textContent = new Date().getFullYear();
+
+    (() => {
+      const viewer = document.getElementById('chiCvViewer');
+      const openButton = document.querySelector('[data-cv-open]');
+      const closeControls = document.querySelectorAll('[data-cv-close]');
+      const frame = document.getElementById('chiCvFrame');
+      if (!viewer || !openButton || !closeControls.length || !frame) return;
+
+      const panel = viewer.querySelector('.chiCvViewerPanel');
+      const cvPdfUrl = 'assets/img/curriculum%20CITTA%20%40%20COLORI%20aggiornato%20.pdf';
+      let lastFocus = null;
+
+      function openViewer() {
+        lastFocus = document.activeElement;
+        frame.src = `${cvPdfUrl}#view=FitH`;
+        viewer.hidden = false;
+        document.body.classList.add('chiCvViewer-open');
+        requestAnimationFrame(() => {
+          viewer.classList.add('is-open');
+          const closeButton = viewer.querySelector('button[data-cv-close]');
+          if (closeButton) closeButton.focus();
+        });
+      }
+
+      function closeViewer() {
+        viewer.classList.remove('is-open');
+        document.body.classList.remove('chiCvViewer-open');
+        window.setTimeout(() => {
+          viewer.hidden = true;
+          if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+        }, 220);
+      }
+
+      openButton.addEventListener('click', openViewer);
+      closeControls.forEach(control => control.addEventListener('click', closeViewer));
+
+      viewer.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeViewer();
+        if (event.key !== 'Tab' || !panel) return;
+
+        const focusable = panel.querySelectorAll('a[href], button:not([disabled]), iframe');
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+    })();
+
   </script>
 </body>
 

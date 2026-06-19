@@ -2263,6 +2263,7 @@ a{text-decoration:none;color:inherit}
 .chiIntroSection,
 .chiValuesSection{
   background:#f4f7fb;
+  scroll-margin-top:96px;
 }
 .chiStorySection,
 .chiFounderSection{
@@ -2478,6 +2479,328 @@ a{text-decoration:none;color:inherit}
   font-weight:700;
   line-height:1.55;
 }
+.chiCvSection{
+  position:relative;
+  overflow:hidden;
+  scroll-margin-top:96px;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(23,166,115,.12), transparent 32%),
+    radial-gradient(circle at 88% 74%, rgba(22,112,255,.13), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #eef4fb 100%);
+}
+.chiCvLayout{
+  display:grid;
+  grid-template-columns:minmax(260px, 430px) minmax(0, 1fr);
+  gap:clamp(28px, 6vw, 84px);
+  align-items:center;
+}
+.chiCvActions{
+  width:100%;
+}
+.chiCvCard{
+  min-width:0;
+  width:100%;
+  display:block;
+  padding:0;
+  border:0;
+  border-radius:12px;
+  background:transparent;
+  cursor:pointer;
+  font:inherit;
+  line-height:0;
+  transition:transform .22s ease, filter .22s ease;
+}
+.chiCvCard:hover,
+.chiCvCard:focus-visible{
+  transform:translateY(-4px);
+  outline:none;
+}
+.chiCvCard img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:12px;
+  filter:drop-shadow(0 18px 34px rgba(8,25,56,.12));
+  transition:filter .22s ease;
+}
+.chiCvCard-view:hover img,
+.chiCvCard-view:focus-visible img{
+  filter:
+    drop-shadow(0 18px 34px rgba(8,25,56,.14))
+    drop-shadow(0 0 22px rgba(22,112,255,.34));
+}
+.chiCvStatement{
+  max-width:680px;
+}
+.chiCvStatement h2{
+  margin:0;
+  color:#0f1b36;
+  font-size:clamp(2.35rem, 6vw, 5.45rem);
+  line-height:.96;
+  letter-spacing:0;
+}
+.chiCvWaveTitle{
+  display:flex;
+  flex-wrap:wrap;
+  column-gap:.22em;
+  row-gap:.02em;
+}
+.chiCvWaveTitle span{
+  display:inline-block;
+  transform-origin:50% 78%;
+  animation:
+    chiSoftWave calc(5.8s + (var(--wave-i) * .37s)) cubic-bezier(.45,0,.22,1) infinite,
+    chiSoftGlow calc(7.4s + (var(--wave-i) * .29s)) ease-in-out infinite;
+  animation-delay:calc(var(--wave-i) * -.48s), calc(var(--wave-i) * -.71s);
+  will-change:transform, filter;
+}
+.chiCvWaveTitle span:nth-child(2n){
+  animation-name:chiSoftWaveAlt, chiSoftGlow;
+}
+.chiCvWaveTitle span:nth-child(3n){
+  animation-duration:6.9s, 8.6s;
+}
+@keyframes chiSoftWave{
+  0%, 100%{ transform:translateY(0) rotate(0deg); }
+  18%{ transform:translateY(-.055em) rotate(-.35deg); }
+  42%{ transform:translateY(.018em) rotate(.16deg); }
+  68%{ transform:translateY(-.032em) rotate(.24deg); }
+}
+@keyframes chiSoftWaveAlt{
+  0%, 100%{ transform:translateY(0) rotate(0deg); }
+  24%{ transform:translateY(.025em) rotate(.22deg); }
+  52%{ transform:translateY(-.065em) rotate(-.24deg); }
+  78%{ transform:translateY(.012em) rotate(.12deg); }
+}
+@keyframes chiSoftGlow{
+  0%, 100%{ filter:drop-shadow(0 0 0 rgba(22,112,255,0)); }
+  45%{ filter:drop-shadow(0 .08em .18em rgba(22,112,255,.10)); }
+}
+.chiCvStatement p:not(.chiKicker){
+  max-width:56ch;
+  margin:18px 0 0;
+  color:#4b5a6e;
+  font-size:clamp(1rem, 1.5vw, 1.14rem);
+  line-height:1.65;
+}
+.chiCvViewer-open{
+  overflow:hidden;
+}
+.chiCvViewer{
+  position:fixed;
+  inset:0;
+  z-index:1200;
+  display:grid;
+  place-items:center;
+  padding:clamp(12px, 2vw, 24px);
+}
+.chiCvViewer[hidden]{
+  display:none;
+}
+.chiCvViewerBackdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(2,12,38,.74);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  opacity:0;
+  transition:opacity .22s ease;
+}
+.chiCvViewerPanel{
+  position:relative;
+  z-index:1;
+  width:min(1120px, 100%);
+  height:min(88vh, 860px);
+  display:grid;
+  grid-template-rows:1fr;
+  overflow:visible;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:8px;
+  background:#f8fbff;
+  box-shadow:0 36px 100px rgba(0,8,28,.46);
+  opacity:0;
+  transform:translateY(18px) scale(.985);
+  transition:opacity .22s ease, transform .22s ease;
+}
+.chiCvViewer.is-open .chiCvViewerBackdrop{
+  opacity:1;
+}
+.chiCvViewer.is-open .chiCvViewerPanel{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+.chiCvViewerClose{
+  position:absolute;
+  top:0;
+  right:0;
+  z-index:4;
+  width:42px;
+  height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:999px;
+  color:#fff;
+  background:rgba(3,27,70,.92);
+  box-shadow:0 10px 28px rgba(0,8,28,.34);
+  font:inherit;
+  font-size:1.45rem;
+  line-height:1;
+  cursor:pointer;
+  transform:translate(45%, -45%);
+  transition:background .18s ease, transform .18s ease;
+}
+.chiCvViewerClose:hover,
+.chiCvViewerClose:focus-visible{
+  background:#1670ff;
+  outline:none;
+  transform:translate(45%, -45%) scale(1.04);
+}
+.chiCvViewerHead{
+  min-height:58px;
+  display:grid;
+  grid-template-columns:minmax(210px, 1fr) auto minmax(132px, 1fr);
+  align-items:center;
+  gap:14px;
+  padding:9px 14px;
+  color:#fff;
+  background:linear-gradient(90deg, #252a31, #1d2229);
+  border-top:4px solid #1670ff;
+  box-shadow:0 1px 0 rgba(255,255,255,.08) inset;
+}
+.chiCvViewerBrand,
+.chiCvViewerControls,
+.chiCvViewerActions{
+  min-width:0;
+  display:flex;
+  align-items:center;
+}
+.chiCvViewerBrand{
+  gap:12px;
+}
+.chiCvViewerHead h2{
+  margin:0;
+  color:#fff;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:.92rem;
+  font-weight:800;
+  line-height:1;
+  letter-spacing:0;
+}
+.chiCvMenuMark{
+  width:34px;
+  height:34px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+.chiCvMenuIcon,
+.chiCvMenuIcon::before,
+.chiCvMenuIcon::after{
+  display:block;
+  width:14px;
+  height:2px;
+  border-radius:999px;
+  background:rgba(255,255,255,.86);
+}
+.chiCvMenuIcon{
+  position:relative;
+}
+.chiCvMenuIcon::before,
+.chiCvMenuIcon::after{
+  content:"";
+  position:absolute;
+  left:0;
+}
+.chiCvMenuIcon::before{
+  top:-5px;
+}
+.chiCvMenuIcon::after{
+  top:5px;
+}
+.chiCvViewerActions{
+  justify-content:flex-end;
+}
+.chiCvViewerControls{
+  justify-content:center;
+  gap:6px;
+}
+.chiCvIconBtn{
+  width:34px;
+  height:34px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:6px;
+  color:#fff;
+  background:transparent;
+  font:inherit;
+  font-size:1.05rem;
+  font-weight:800;
+  line-height:1;
+  cursor:pointer;
+  transition:background .18s ease, color .18s ease;
+}
+.chiCvIconBtn:hover,
+.chiCvIconBtn:focus-visible{
+  background:rgba(255,255,255,.16);
+  outline:none;
+}
+.chiCvPageStatus,
+.chiCvZoomStatus{
+  min-height:30px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 8px;
+  border-radius:4px;
+  color:#fff;
+  background:rgba(0,0,0,.28);
+  font-size:.84rem;
+  font-weight:800;
+  line-height:1;
+  white-space:nowrap;
+}
+.chiCvPageStatus strong{
+  color:#fff;
+}
+.chiCvDivider{
+  width:1px;
+  height:28px;
+  margin:0 4px;
+  background:rgba(255,255,255,.18);
+}
+.chiCvViewerFrameWrap{
+  position:relative;
+  min-height:0;
+  display:grid;
+  grid-template-rows:1fr auto;
+  overflow:hidden;
+  border-radius:8px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(22,112,255,.10), transparent 36%),
+    #e9eff8;
+}
+.chiCvViewerFrame{
+  width:100%;
+  height:100%;
+  border:0;
+  background:#fff;
+}
+.chiCvViewerFallback{
+  margin:0;
+  padding:9px 16px;
+  color:#566276;
+  background:#fff;
+  border-top:1px solid rgba(10,18,34,.08);
+  font-size:.82rem;
+  line-height:1.4;
+}
 .chiContactSection{
   color:#fff;
   background:
@@ -2550,6 +2873,28 @@ a{text-decoration:none;color:inherit}
   .chiFounderPhoto img{
     max-height:370px;
   }
+  .chiCvLayout{
+    grid-template-columns:1fr;
+  }
+  .chiCvActions{
+    max-width:390px;
+  }
+  .chiCvViewerHead{
+    grid-template-columns:1fr auto;
+    grid-template-areas:
+      "brand actions"
+      "controls controls";
+    gap:8px 10px;
+  }
+  .chiCvViewerBrand{
+    grid-area:brand;
+  }
+  .chiCvViewerControls{
+    grid-area:controls;
+  }
+  .chiCvViewerActions{
+    grid-area:actions;
+  }
 }
 
 @media (max-width: 560px){
@@ -2583,6 +2928,72 @@ a{text-decoration:none;color:inherit}
     width:min(92%, 320px);
     max-height:320px;
   }
+  .chiCvSection{
+    padding:44px 0;
+  }
+  .chiCvActions{
+    max-width:335px;
+  }
+  .chiCvStatement h2{
+    font-size:clamp(2.25rem, 13vw, 3.65rem);
+  }
+  .chiCvViewer{
+    padding:8px;
+  }
+  .chiCvViewerPanel{
+    height:calc(100vh - 16px);
+    border-radius:8px;
+  }
+  .chiCvViewerClose{
+    top:8px;
+    right:8px;
+    width:38px;
+    height:38px;
+    font-size:1.25rem;
+    transform:none;
+  }
+  .chiCvViewerClose:hover,
+  .chiCvViewerClose:focus-visible{
+    transform:none;
+  }
+  .chiCvViewerHead{
+    padding:8px;
+  }
+  .chiCvViewerBrand h2{
+    font-size:.78rem;
+  }
+  .chiCvMenuMark{
+    width:28px;
+    height:30px;
+  }
+  .chiCvViewerControls{
+    justify-content:space-between;
+    gap:3px;
+  }
+  .chiCvViewerActions{
+    gap:6px;
+  }
+  .chiCvIconBtn{
+    width:31px;
+    height:31px;
+    font-size:.94rem;
+  }
+  .chiCvPageStatus,
+  .chiCvZoomStatus{
+    min-height:28px;
+    padding:0 6px;
+    font-size:.76rem;
+  }
+  .chiCvDivider{
+    height:24px;
+    margin:0 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .chiCvWaveTitle span{
+    animation:none;
+  }
 }
 
 /* ==========================================
@@ -2592,6 +3003,7 @@ a{text-decoration:none;color:inherit}
   position:relative;
   padding:clamp(48px, 7vw, 86px) 0;
   overflow:hidden;
+  scroll-margin-top:96px;
   background:
     radial-gradient(circle at 86% 22%, rgba(23,166,115,.10), transparent 30%),
     radial-gradient(circle at 10% 0%, rgba(22,112,255,.14), transparent 34%),
@@ -2820,6 +3232,60 @@ a{text-decoration:none;color:inherit}
   color:#657184;
   font-size:.84rem;
 }
+.chiPortfolioFrame{
+  min-height:auto;
+}
+.chiPortfolioGrid{
+  min-height:auto;
+  align-items:start;
+  padding-bottom:34px;
+}
+.chiPortfolioFounder{
+  display:grid;
+  grid-template-rows:minmax(300px, 390px) auto auto;
+  gap:0;
+  min-height:auto;
+}
+.chiPortfolioPortrait{
+  position:relative;
+  inset:auto;
+  min-height:0;
+  height:100%;
+  align-items:flex-end;
+}
+.chiPortfolioPortrait img{
+  width:min(100%, 440px);
+  max-height:360px;
+}
+.chiPortfolioPortrait span{
+  display:none;
+}
+.chiPortfolioBio{
+  position:relative;
+  left:auto;
+  right:auto;
+  bottom:auto;
+  padding:20px 24px 22px;
+  box-shadow:none;
+}
+.chiPortfolioVideo{
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:16 / 9;
+  margin:18px 20px 0;
+  border:2px solid #171e2b;
+  border-radius:26px;
+  background:#fff;
+  box-shadow:0 20px 46px rgba(3,27,70,.10);
+}
+.chiPortfolioVideo iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
 
 @media (max-width: 980px){
   .chiPortfolioFrame{
@@ -2828,7 +3294,7 @@ a{text-decoration:none;color:inherit}
   .chiPortfolioGrid{
     grid-template-columns:1fr;
     min-height:auto;
-    padding:44px 28px 0;
+    padding:44px 28px 30px;
   }
   .chiPortfolioCopy{
     max-width:100%;
@@ -2852,10 +3318,10 @@ a{text-decoration:none;color:inherit}
     max-width:720px;
   }
   .chiPortfolioFounder{
-    min-height:600px;
+    min-height:auto;
   }
   .chiPortfolioPortrait{
-    inset:0 0 158px;
+    inset:auto;
   }
 }
 
@@ -2873,7 +3339,7 @@ a{text-decoration:none;color:inherit}
     font-size:.62rem;
   }
   .chiPortfolioGrid{
-    padding:30px 18px 0;
+    padding:30px 18px 24px;
   }
   .chiPortfolioCopy h2{
     font-size:clamp(3rem, 17vw, 4.75rem);
@@ -2883,18 +3349,18 @@ a{text-decoration:none;color:inherit}
     line-height:1.55;
   }
   .chiPortfolioFounder{
-    min-height:560px;
+    grid-template-rows:minmax(240px, 320px) auto auto;
+    min-height:auto;
   }
   .chiPortfolioPortrait{
-    inset:0 -54px 164px;
+    inset:auto;
   }
   .chiPortfolioPortrait img{
-    width:min(100%, 420px);
-    max-height:390px;
+    width:min(100%, 340px);
+    max-height:300px;
   }
   .chiPortfolioPortrait span{
-    right:36px;
-    font-size:4.4rem;
+    display:none;
   }
   .chiPortfolioBio{
     padding:20px 18px 22px;
@@ -2907,8 +3373,9 @@ a{text-decoration:none;color:inherit}
     gap:10px;
     font-size:.8rem;
   }
-  .chiPortfolioStats{
-    grid-template-columns:1fr;
+  .chiPortfolioVideo{
+    margin:16px 0 0;
+    border-radius:18px;
   }
 }
 
@@ -4133,6 +4600,256 @@ a{text-decoration:none;color:inherit}
   font-weight:600;
   color:#1a2f5e;
   text-align:center;
+}
+
+/* --- Lavora con noi: glass section over cand.jpg --- */
+.joinPageMain{
+  background:#07152a;
+}
+.joinGlassSection{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:clamp(34px, 5vw, 58px) 0;
+  background:url("assets/img/cand.jpg") center/cover no-repeat;
+}
+.joinGlassSection::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(120deg, rgba(238,246,255,.30), rgba(255,255,255,.12));
+  pointer-events:none;
+}
+.joinGlassSection .joinLayout{
+  padding:0;
+  position:relative;
+}
+.joinSectionHead{
+  max-width:780px;
+  margin:0 0 clamp(20px, 3vw, 32px);
+  color:#0b1830;
+}
+.joinSectionHead .sectionEyebrow{
+  color:#0a4ecf;
+}
+.joinSectionHead h2{
+  margin:0;
+  color:#0b1830;
+  font-size:clamp(2rem, 4vw, 3.65rem);
+  line-height:1;
+  letter-spacing:0;
+}
+.joinSectionHead p{
+  max-width:64ch;
+  margin:12px 0 0;
+  color:#1a2f5e;
+  font-size:clamp(1rem, 1.35vw, 1.14rem);
+  line-height:1.6;
+}
+.joinGlassSection .joinCard,
+.joinGlassSection .sideBox{
+  border:1px solid rgba(255,255,255,.62);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.76), rgba(255,255,255,.44));
+  box-shadow:
+    0 26px 70px rgba(5,18,50,.22),
+    inset 0 1px 0 rgba(255,255,255,.72),
+    inset 0 -1px 0 rgba(255,255,255,.22);
+  backdrop-filter:blur(26px) saturate(160%);
+  -webkit-backdrop-filter:blur(26px) saturate(160%);
+}
+.joinGlassSection .joinCard{
+  border-radius:26px;
+}
+.joinGlassSection .sideBox{
+  border-radius:22px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.74), rgba(255,255,255,.42));
+}
+.joinGlassSection .contactHead h2,
+.joinGlassSection .sideBox h3{
+  color:#0b1830;
+  text-shadow:0 1px 0 rgba(255,255,255,.34);
+}
+.joinGlassSection .contactHead p,
+.joinGlassSection .joinFormFooter small,
+.joinGlassSection .joinNoteBox p{
+  color:#1f3150;
+}
+.joinGlassSection .waForm label span{
+  color:#1b2a44;
+}
+.joinGlassSection .waForm input,
+.joinGlassSection .waForm select,
+.joinGlassSection .waForm textarea{
+  border:1px solid rgba(255,255,255,.68);
+  background:rgba(255,255,255,.62);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.72),
+    0 8px 22px rgba(8,25,56,.06);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+}
+.joinGlassSection .waForm input:focus,
+.joinGlassSection .waForm select:focus,
+.joinGlassSection .waForm textarea:focus{
+  border-color:rgba(22,112,255,.48);
+  background:rgba(255,255,255,.56);
+  box-shadow:
+    0 0 0 4px rgba(22,112,255,.13),
+    inset 0 1px 0 rgba(255,255,255,.76);
+}
+.joinGlassSection .joinNoteBox{
+  border:1px solid rgba(255,255,255,.62);
+  background:rgba(255,255,255,.54);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.58);
+  backdrop-filter:blur(12px) saturate(140%);
+  -webkit-backdrop-filter:blur(12px) saturate(140%);
+}
+.joinGlassSection .joinRolePill,
+.joinGlassSection .joinValueItem,
+.joinGlassSection .sideLine-icon{
+  border-color:rgba(255,255,255,.62);
+  background:rgba(255,255,255,.58);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.58);
+  backdrop-filter:blur(12px) saturate(140%);
+  -webkit-backdrop-filter:blur(12px) saturate(140%);
+}
+.joinGlassSection .joinRolePill{
+  color:#0b4aa8;
+}
+.joinGlassSection .joinValueItem{
+  color:#17315d;
+}
+.joinGlassSection .sideLine{
+  border-top-color:rgba(255,255,255,.32);
+}
+.joinGlassSection .sideLine:first-of-type{
+  border-top:0;
+}
+.joinContactLine{
+  align-items:center;
+}
+.joinContactLine > div:last-child{
+  display:grid;
+  gap:2px;
+  justify-items:end;
+  margin-left:auto;
+  min-width:0;
+}
+.joinContactLine span{
+  color:#405069;
+  font-size:.76rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.joinGlassSection .sideLine-val,
+.joinGlassSection .sideLine-val-blue{
+  color:#0f1b36;
+  font-weight:700;
+  font-size:.94rem;
+  text-decoration:none;
+}
+.joinGlassSection .sideLine-val:hover,
+.joinGlassSection .sideLine-val:focus-visible,
+.joinGlassSection .sideLine-val-blue:hover,
+.joinGlassSection .sideLine-val-blue:focus-visible{
+  color:#1670ff;
+  text-decoration:none;
+}
+.joinGlassSection .btnJobSubmit{
+  min-width:min(100%, 280px);
+  min-height:54px;
+  justify-content:center;
+  padding:16px 34px;
+  font-size:1.02rem;
+  background:linear-gradient(135deg, rgba(22,112,255,.96), rgba(15,86,197,.92));
+  box-shadow:
+    0 12px 30px rgba(22,112,255,.30),
+    inset 0 1px 0 rgba(255,255,255,.36);
+}
+.joinGlassSection .btnJobSubmit svg{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.joinFormFooter{
+  display:grid;
+  gap:12px;
+  margin-top:6px;
+}
+.joinFormFooter small{
+  display:block;
+  max-width:58ch;
+  font-size:.84rem;
+  font-weight:700;
+  line-height:1.55;
+}
+.joinPrivacyCheck{
+  display:grid !important;
+  grid-template-columns:auto 1fr;
+  align-items:start;
+  gap:10px 12px !important;
+  margin-top:4px;
+  padding:13px 14px;
+  border:1px solid rgba(255,255,255,.58);
+  border-radius:14px;
+  background:rgba(255,255,255,.46);
+  backdrop-filter:blur(12px) saturate(140%);
+  -webkit-backdrop-filter:blur(12px) saturate(140%);
+}
+.joinPrivacyCheck input{
+  width:18px !important;
+  height:18px !important;
+  min-height:18px !important;
+  margin:2px 0 0;
+  padding:0 !important;
+  border-radius:4px !important;
+  box-shadow:none !important;
+  accent-color:#1670ff;
+}
+.joinPrivacyCheck > span:not(.fsFieldErr){
+  color:#172844;
+  font-size:.88rem;
+  font-weight:700;
+  line-height:1.45;
+}
+.joinPrivacyCheck a{
+  color:#0a4ecf;
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+.joinPrivacyCheck .fsFieldErr{
+  grid-column:2;
+}
+.joinHelpBox ul{
+  display:grid;
+  gap:10px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.joinHelpBox li{
+  position:relative;
+  padding-left:20px;
+  color:#1a2f5e;
+  font-size:.9rem;
+  line-height:1.45;
+}
+.joinHelpBox li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:.55em;
+  width:7px;
+  height:7px;
+  border-radius:999px;
+  background:#1670ff;
+  box-shadow:0 0 0 4px rgba(22,112,255,.12);
 }
 
 /* --- Prevent layout shift on reveal --- */
