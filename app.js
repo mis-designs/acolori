@@ -1109,7 +1109,7 @@ Grazie.`;
       }
 
       sessionStorage.setItem("requestedLanguage", lang);
-      const targetHref = `contatti.html?lingua=${encodeURIComponent(lang)}#form-preventivo`;
+      const targetHref = `/contatti?lingua=${encodeURIComponent(lang)}#form-preventivo`;
 
       if (!overlay) {
         window.location.href = targetHref;

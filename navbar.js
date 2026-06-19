@@ -14,12 +14,13 @@
   'use strict';
 
   /* ── Active-page detection ── */
-  var page = window.location.pathname.split('/').pop();
-  if (!page || page === '/') page = 'index.html';
+  var page = window.location.pathname.split('/').pop() || '';
+  page = page.replace(/\.html$/, '');
+  if (page === 'index') page = '';
 
-  function ac(href) {
-    /* Returns ' class="active"' when href matches current page */
-    return href === page ? ' class="active"' : '';
+  function ac(slug) {
+    /* Returns ' class="active"' when route matches current page */
+    return slug === page ? ' class="active"' : '';
   }
 
   /* ── SVG icons ── */
@@ -59,7 +60,7 @@
     '  <div class="siteNav-inner">',
 
     /* Brand */
-    '    <a class="siteNav-brand" href="index.html" aria-label="Torna alla home">',
+    '    <a class="siteNav-brand" href="/" aria-label="Torna alla home">',
     '      <img src="assets/img/logo.jpg" alt="Logo Città @ Colori" width="38" height="38">',
     '      <div class="siteNav-brand-text">',
     '        <strong>Città @ Colori</strong>',
@@ -69,24 +70,24 @@
 
     /* Desktop nav links */
     '    <ul class="siteNav-links" id="siteNavLinks" role="list">',
-    '      <li><a href="index.html"'            + ac('index.html')            + '>Home</a></li>',
-    '      <li><a href="servizi.html"'          + ac('servizi.html')          + '>Servizi</a></li>',
-    '      <li><a href="lavora-con-noi.html"'   + ac('lavora-con-noi.html')   + '>Lavora con noi</a></li>',
+    '      <li><a href="/"'                     + ac('')                     + '>Home</a></li>',
+    '      <li><a href="/servizi"'              + ac('servizi')              + '>Servizi</a></li>',
+    '      <li><a href="/lavora-con-noi"'       + ac('lavora-con-noi')       + '>Lavora con noi</a></li>',
     '      <li class="siteNav-item siteNav-hasDropdown">',
-    '        <a href="chi-siamo.html"'           + ac('chi-siamo.html')         + ' aria-haspopup="true" aria-expanded="false">Chi siamo</a>',
+    '        <a href="/chi-siamo"'              + ac('chi-siamo')             + ' aria-haspopup="true" aria-expanded="false">Chi siamo</a>',
     '        <div class="siteNav-dropdown" aria-label="Sottomenu Chi siamo">',
-    '          <a href="chi-siamo.html#storia"><span>01</span>La nostra storia</a>',
-    '          <a href="chi-siamo.html#valori"><span>02</span>Valori e metodo</a>',
-    '          <a href="chi-siamo.html#curriculum"><span>03</span>Curriculum</a>',
+    '          <a href="/chi-siamo#storia"><span>01</span>La nostra storia</a>',
+    '          <a href="/chi-siamo#valori"><span>02</span>Valori e metodo</a>',
+    '          <a href="/chi-siamo#curriculum"><span>03</span>Curriculum</a>',
     '        </div>',
     '      </li>',
-    '      <li><a href="contatti.html"'         + ac('contatti.html')         + '>Contatti</a></li>',
+    '      <li><a href="/contatti"'             + ac('contatti')             + '>Contatti</a></li>',
     '    </ul>',
 
     /* Actions */
     '    <div class="siteNav-actions">',
     '      <a class="siteNav-phone" href="tel:+393889009306" aria-label="Chiamaci">+39 388 900 9306</a>',
-    '      <a class="siteNav-cta"   href="contatti.html">Richiedi preventivo</a>',
+    '      <a class="siteNav-cta"   href="/contatti">Richiedi preventivo</a>',
     '    </div>',
 
     /* Hamburger — triggers overlay on mobile */
@@ -118,7 +119,7 @@
 
     /* Header */
     '    <div class="navOverlay-head">',
-    '      <a class="navOverlay-brand" href="index.html" aria-label="Home">',
+    '      <a class="navOverlay-brand" href="/" aria-label="Home">',
     '        <img src="assets/img/logo.jpg" alt="Logo Città @ Colori" width="34" height="34">',
     '        <div class="navOverlay-brand-text">',
     '          <strong>Città @ Colori</strong>',
@@ -135,14 +136,14 @@
 
     /* Nav links */
     '    <nav class="navOverlay-nav" aria-label="Menu principale">',
-    overlayItem('index.html',          icons.home,      '01', 'Home',         page === 'index.html'),
-    overlayItem('servizi.html',        icons.servizi,   '02', 'Servizi',      page === 'servizi.html'),
-    overlayItem('lavora-con-noi.html', icons.lavora,    '03', 'Lavora con noi', page === 'lavora-con-noi.html'),
-    overlayItem('chi-siamo.html',       icons.chisiamo,  '04', 'Chi siamo',    page === 'chi-siamo.html'),
-    '      <a class="navOverlay-subItem" href="chi-siamo.html#storia"><span>01</span>La nostra storia</a>',
-    '      <a class="navOverlay-subItem" href="chi-siamo.html#valori"><span>02</span>Valori e metodo</a>',
-    '      <a class="navOverlay-subItem" href="chi-siamo.html#curriculum"><span>03</span>Curriculum</a>',
-    overlayItem('contatti.html',       icons.contatti,  '05', 'Contatti',     page === 'contatti.html'),
+    overlayItem('/',                   icons.home,      '01', 'Home',         page === ''),
+    overlayItem('/servizi',            icons.servizi,   '02', 'Servizi',      page === 'servizi'),
+    overlayItem('/lavora-con-noi',     icons.lavora,    '03', 'Lavora con noi', page === 'lavora-con-noi'),
+    overlayItem('/chi-siamo',          icons.chisiamo,  '04', 'Chi siamo',    page === 'chi-siamo'),
+    '      <a class="navOverlay-subItem" href="/chi-siamo#storia"><span>01</span>La nostra storia</a>',
+    '      <a class="navOverlay-subItem" href="/chi-siamo#valori"><span>02</span>Valori e metodo</a>',
+    '      <a class="navOverlay-subItem" href="/chi-siamo#curriculum"><span>03</span>Curriculum</a>',
+    overlayItem('/contatti',           icons.contatti,  '05', 'Contatti',     page === 'contatti'),
     '    </nav>',
 
     /* Footer */
@@ -156,7 +157,7 @@
     '        <span class="navOverlay-foot-icon">' + icon20(icons.mail) + '</span>',
     '        cittaacolori@gmail.com',
     '      </a>',
-    '      <a class="navOverlay-cta" href="contatti.html">',
+    '      <a class="navOverlay-cta" href="/contatti">',
     '        Richiedi preventivo',
     '      </a>',
     '    </div>',
